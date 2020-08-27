@@ -2,6 +2,7 @@
 
 const express = require('../modules/node_modules/express');
 const mongoose = require('../modules/node_modules/mongoose');
+const bodyParser = require('../modules/node_modules/body-parser');
 const port = 3000;
 
 const app = express();
@@ -14,6 +15,11 @@ app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
 
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.post('/enviarFormulario',function(request,response){
+   console.log(request.body) //you will get your data in this as object.
+})
 
 mongoose.connect('mongodb+srv://EquipoFactoriaF5:gremlin@cluster0.9xlsu.mongodb.net/hiringday?retryWrites=true&w=majority', {useNewUrlParser: true});
 const db = mongoose.connection;
@@ -36,3 +42,4 @@ db.once('open', function() {
         console.log(user);
     })
 });
+

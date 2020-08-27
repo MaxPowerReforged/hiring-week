@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <form>     
+          <input type="text" id="inputNombre" name="inputNombre">
+          <input type="text" id="inputEmail"  name="inputEmail">
+          <input type="text" id="inputNumeroTelefono" name="inputNumeroTelefono">
+          
+          <button type="button" id="buttonEnviar">Enviar mensaje</button>
+    
+        </form>
+
+        <script>
+            let button =document.getElementById('buttonEnviar')
+            button.addEventListener('click',enviarFormulario);
+
+            function enviarFormulario(){
+                let inputNombre =document.getElementById('inputNombre').value
+                let inputEmail =document.getElementById('inputEmail').value
+                let inputNumeroTelefono =document.getElementById('inputNumeroTelefono').value
+                let informacionFormulario ={
+                    nombre: inputNombre,
+                    email: inputEmail,
+                    telefono: inputNumeroTelefono
+                }
+
+                $.post('http://127.0.0.1:3000/enviarFormulario',informacionFormulario,function(){
+                    console.log('la función se a ejecutado')
+
+
+
+                })
+
+            }
+
+
+        </script>
+</body>
+
+
+</html>
