@@ -19,27 +19,32 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post('/enviarFormulario',function(request,response){
    console.log(request.body) //you will get your data in this as object.
-})
+ 
+   mongoose.connect('mongodb+srv://EquipoFactoriaF5:gremlin@cluster0.9xlsu.mongodb.net/hiringday?retryWrites=true&w=majority', {useNewUrlParser: true});
+   const db = mongoose.connection;
+   db.on('error', console.error.bind(console, 'console error:'));
+   db.once('open', function() {
+       console.log('we re connected!');
+       const Schema = new mongoose.Schema({
+           name: String,
+           email: String,
+           telefono: String, 
+           
+       });
+       const Users2 = mongoose.model('Users2', Schema);
+       const nuevoUsuario = new Users2(request.body);
 
-mongoose.connect('mongodb+srv://EquipoFactoriaF5:gremlin@cluster0.9xlsu.mongodb.net/hiringday?retryWrites=true&w=majority', {useNewUrlParser: true});
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'console error:'));
-db.once('open', function() {
-    console.log('we re connected!');
-    const Schema = new mongoose.Schema({
-        name: String
-    });
-    const Users = mongoose.model('Users', Schema);
-    const lucas = new Users({ name: 'Lucas'});
-    console.log(lucas.name);
-    
-    lucas.save(function (err, lucas){
-        if (err) return console.error(err);
-        console.log("lucas ha sido salvado");
-    });
-    Users.find(function (err, user){
-        if (err) return console.error(err);
-        console.log(user);
-    })
-});
+       
+       nuevoUsuario.save(function (err, nuevoUsuario){
+           if (err) return console.error(err);
+           console.log("lucas ha sido salvado");
+       });
+       Users2.find(function (err, user){
+           if (err) return console.error(err);
+           console.log(user);
+       })
+   });
+
+
+})
 
