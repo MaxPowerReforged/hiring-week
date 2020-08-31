@@ -4,8 +4,20 @@ const express = require('../modules/node_modules/express');
 const mongoose = require('../modules/node_modules/mongoose');
 const bodyParser = require('../modules/node_modules/body-parser');
 const port = 3000;
+const cors = require('../modules/node_modules/cors');
 
 const app = express();
+app.use(cors());
+
+mongoose.connect('mongodb+srv://EquipoFactoriaF5:gremlin@cluster0.9xlsu.mongodb.net/hiringday?retryWrites=true&w=majority', {useNewUrlParser: true});
+const db = mongoose.connection;
+const Schema = new mongoose.Schema({
+ name: String,
+ email: String,
+ telefono: String, 
+ 
+         });
+const Users2 = mongoose.model('Users2', Schema);
 
 app.get('/', (req, res) => {
     
@@ -20,18 +32,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.post('/enviarFormulario',function(request,response){
    console.log(request.body) //you will get your data in this as object.
  
-   mongoose.connect('mongodb+srv://EquipoFactoriaF5:gremlin@cluster0.9xlsu.mongodb.net/hiringday?retryWrites=true&w=majority', {useNewUrlParser: true});
-   const db = mongoose.connection;
    db.on('error', console.error.bind(console, 'console error:'));
    db.once('open', function() {
        console.log('we re connected!');
-       const Schema = new mongoose.Schema({
-           name: String,
-           email: String,
-           telefono: String, 
-           
-       });
-       const Users2 = mongoose.model('Users2', Schema);
+      
        const nuevoUsuario = new Users2(request.body);
 
        
@@ -43,8 +47,8 @@ app.post('/enviarFormulario',function(request,response){
            if (err) return console.error(err);
            console.log(user);
        })
-   });
-
-
+   }) 
 })
+
+
 
