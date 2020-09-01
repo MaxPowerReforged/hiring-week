@@ -12,42 +12,52 @@ app.use(cors());
 mongoose.connect('mongodb+srv://EquipoFactoriaF5:gremlin@cluster0.9xlsu.mongodb.net/hiringday?retryWrites=true&w=majority', {useNewUrlParser: true});
 const db = mongoose.connection;
 const Schema = new mongoose.Schema({
- name: String,
- email: String,
- telefono: String, 
+    googleId: String,
+    name: String,
+    surname: String,
+    profilePic: String,
+    extract: String,
+    links: Array,
+    contacto: String,
+    speciality: String,
+    languages:  Array,
+    softSkills: Array,
+    mail: String,
+    techSkills: Array,
+    workflow: String,
+    software: String,
+    cv: String,
  
          });
-const Users2 = mongoose.model('Users2', Schema);
+         const Users2 = mongoose.model('Users2', Schema);
 
-app.get('/', (req, res) => {
-    
-});
-
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
-});
-
-app.use(bodyParser.urlencoded({ extended: true }));
-
-app.post('/enviarFormulario',function(request,response){
-   console.log("el request.body es: ", request.body) //you will get your data in this as object.
- 
-    db.on('error', console.error.bind(console, 'console error:'));
-    console.log('we re connected!');
-      
-    const nuevoUsuario = new Users2(request.body);
-    console.log("nuevoUsuario es: ", nuevoUsuario);
-       
-    nuevoUsuario.save(function (err, nuevoUsuario){
-        if (err) return console.error(err);
-            console.log("lucas ha sido salvado");
-        });
-        Users2.find(function (err, user){
-           if (err) return console.error(err);
-           console.log(user);
-        })
-   console.log("probando después de db.once()");
-})
-
-
-
+         app.get('/', (req, res) => {
+             
+         });
+         
+         app.listen(port, () => {
+           console.log(`Example app listening at http://localhost:${port}`);
+         });
+         
+         app.use(bodyParser.urlencoded({ extended: true }));
+         
+         app.post('/enviarFormulario',function(request,response){
+            console.log("el request.body es: ", request.body) //you will get your data in this as object.
+          
+             db.on('error', console.error.bind(console, 'console error:'));
+             console.log('we re connected!');
+               
+             const nuevoUsuario = new Users2(request.body);
+             console.log("nuevoUsuario es: ", nuevoUsuario);
+                
+             nuevoUsuario.save(function (err, nuevoUsuario){
+                 if (err) return console.error(err);
+                     console.log("lucas ha sido salvado");
+                 });
+                 Users2.find(function (err, user){
+                    if (err) return console.error(err);
+                    console.log(user);
+                 })
+            console.log("probando después de db.once()");
+         })
+         

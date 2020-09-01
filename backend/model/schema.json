@@ -1,0 +1,20 @@
+{
+    "username": "MaxPower",
+    "profilePic": "photo url",
+    "name": "Joan",
+    "surname": "Carazo",
+    "password": "iLoveRene",
+    "quote": "Hay tres formas de hacer las cosas, a las buenas, a las malas, y al estilo de MaxPower",
+    "cv": "Lorem ipsum dolor sit amet consectetur adipiscing elit, curabitur posuere malesuada maecenas erat felis tortor, quisque consequat bibendum pulvinar per eu. Nec praesent eleifend torquent quam condimentum velit congue at, ornare malesuada scelerisque luctus viverra conubia etiam dignissim, sapien nibh urna arcu lacinia litora volutpat.",
+    "techSkills": "bla bla bla bla",
+    "softSkills": "bla bla bla bla",
+    "techStack": ["html", "css", "js", "node.js", "vue.js"],
+    "speciality": "backend",
+    "urlGit": "ksjdnakjsnad",
+    "urlLinkedin": "aksdhlaksdhakjs",
+    "urlPortfolio": "asjdasdkjashkda",
+    "languages":  ["spanish", "english"],
+    "phone": "3948339348",
+    "email": "joancarazo1994@gmail.com"
+}
+
