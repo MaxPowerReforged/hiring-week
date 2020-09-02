@@ -17,29 +17,13 @@
 
     function onSignIn(googleUser) {
         var profile = googleUser.getBasicProfile();
-        console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-        console.log('Name: ' + profile.getName());
-        console.log('Image URL: ' + profile.getImageUrl());
-        console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-    }
 
-
-    let button =document.getElementById('buttonEnviar')
-    button.addEventListener('click',enviarFormulario);
-
-    function enviarFormulario(){
-        let inputNombre =document.getElementById('inputNombre').value
-        let inputEmail =document.getElementById('inputEmail').value
-        let inputNumeroTelefono =document.getElementById('inputNumeroTelefono').value
-        let informacionFormulario ={
-            nombre: inputNombre,
-            email: inputEmail,
-            telefono: inputNumeroTelefono
-        }
-        $.post('http://127.0.0.1:3000/enviarFormulario',informacionFormulario,function(){
+        $.post('http://127.0.0.1:8887/enviarFormulario',profile.getId(),function(){
             console.log('la función se ha ejecutado');
         })
     }
+
+    
 </script>
 </body>
 </html>

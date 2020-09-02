@@ -3,7 +3,7 @@
 const express = require('../modules/node_modules/express');
 const mongoose = require('../modules/node_modules/mongoose');
 const bodyParser = require('../modules/node_modules/body-parser');
-const path = require('../modules/node_modules/path');
+const path = require('path');
 const cors = require('../modules/node_modules/cors');
 const port = 8887;
 
