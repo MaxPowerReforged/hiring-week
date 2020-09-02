@@ -3,45 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-signin-client_id" content="929847184367-lf702ndkmceq2r6efkp8a1fbp544udhu.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>Document</title>
 </head>
 <body>
-    <form>     
-          <input type="text" id="inputNombre" name="inputNombre">
-          <input type="text" id="inputEmail"  name="inputEmail">
-          <input type="text" id="inputNumeroTelefono" name="inputNumeroTelefono">
-          
-          <button type="button" id="buttonEnviar">Enviar mensaje</button>
+<h1>Test registro</h1>
+<div class="g-signin2" data-onsuccess="onSignIn"></div>
     
-        </form>
+<script>
+    'use strict'
 
-        <script>
-            let button =document.getElementById('buttonEnviar')
-            button.addEventListener('click',enviarFormulario);
-
-            function enviarFormulario(){
-                let inputNombre =document.getElementById('inputNombre').value
-                let inputEmail =document.getElementById('inputEmail').value
-                let inputNumeroTelefono =document.getElementById('inputNumeroTelefono').value
-                let informacionFormulario ={
-                    nombre: inputNombre,
-                    email: inputEmail,
-                    telefono: inputNumeroTelefono
-                }
-
-                $.post('http://127.0.0.1:3000/enviarFormulario',informacionFormulario,function(){
-                    console.log('la función se ha ejecutado')
+    function onSignIn(googleUser) {
+        var profile = googleUser.getBasicProfile();
+        console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+        console.log('Name: ' + profile.getName());
+        console.log('Image URL: ' + profile.getImageUrl());
+        console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+    }
 
 
+    let button =document.getElementById('buttonEnviar')
+    button.addEventListener('click',enviarFormulario);
 
-                })
-
-            }
-
-
-        </script>
+    function enviarFormulario(){
+        let inputNombre =document.getElementById('inputNombre').value
+        let inputEmail =document.getElementById('inputEmail').value
+        let inputNumeroTelefono =document.getElementById('inputNumeroTelefono').value
+        let informacionFormulario ={
+            nombre: inputNombre,
+            email: inputEmail,
+            telefono: inputNumeroTelefono
+        }
+        $.post('http://127.0.0.1:3000/enviarFormulario',informacionFormulario,function(){
+            console.log('la función se ha ejecutado');
+        })
+    }
+</script>
 </body>
-
-
 </html>
