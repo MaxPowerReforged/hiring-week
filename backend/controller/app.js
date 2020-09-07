@@ -20,14 +20,14 @@ const Schema = new mongoose.Schema({
     profilePic: String,
     extract: String,
     links: Array,
-    contacto: String,
+    contact: String,
     speciality: String,
     languages:  Array,
     softSkills: Array,
     mail: String,
     techSkills: Array,
-    workflow: String,
-    software: String,
+    workflow: Array,
+    software: Array,
     cv: String,
  });
 
@@ -51,6 +51,14 @@ console.log('we re connected!');
                
 const nuevoUsuario = new Users2();
 nuevoUsuario.googleId = request.body.IdGoogle;
+nuevoUsuario.name = " ";
+nuevoUsuario.surname = " ";
+nuevoUsuario.profilePic = " ";
+nuevoUsuario.extract = " ";
+nuevoUsuario.contact = " ";
+nuevoUsuario.speciality = " ";
+nuevoUsuario.mail = " ";
+nuevoUsuario.cv = " ";
 
 console.log("nuevoUsuario es: ", nuevoUsuario);
 

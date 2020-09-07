@@ -16,18 +16,17 @@
     'use strict'
 
     function onSignIn(googleUser) {
-        var profile = googleUser.getBasicProfile();
-        console.log('Login realizado con Google, Id:', profile.getId());
-        let IdGoogle = {
-            IdGoogle = profile.getId()
+        var googleId = googleUser.getBasicProfile().getId();
+        console.log('Login realizado con Google, Id:', googleId);
+        let newUser = {
+            IdGoogle: googleId
         }
 
-        $.post('http://127.0.0.1:8887/enviarFormulario',IdGoogle.stringify(),function(){
+        $.post('http://127.0.0.1:8887/enviarFormulario', newUser,function(){
             console.log('la función se ha ejecutado');
         });
     }
 
-    
 </script>
 </body>
 </html>
