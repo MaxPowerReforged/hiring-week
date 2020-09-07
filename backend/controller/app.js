@@ -49,7 +49,9 @@ console.log("el request.body es: ", request.body) //you will get your data in th
 db.on('error', console.error.bind(console, 'console error:'));
 console.log('we re connected!');
                
-const nuevoUsuario = new Users2(request.body);
+const nuevoUsuario = new Users2();
+nuevoUsuario.googleId = request.body.IdGoogle;
+
 console.log("nuevoUsuario es: ", nuevoUsuario);
 
 //guarda nuevo usuario en base de datos

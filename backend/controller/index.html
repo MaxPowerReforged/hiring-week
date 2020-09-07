@@ -17,10 +17,14 @@
 
     function onSignIn(googleUser) {
         var profile = googleUser.getBasicProfile();
+        console.log('Login realizado con Google, Id:', profile.getId());
+        let IdGoogle = {
+            IdGoogle = profile.getId()
+        }
 
-        $.post('http://127.0.0.1:8887/enviarFormulario',profile.getId(),function(){
+        $.post('http://127.0.0.1:8887/enviarFormulario',IdGoogle.stringify(),function(){
             console.log('la función se ha ejecutado');
-        })
+        });
     }
 
     
