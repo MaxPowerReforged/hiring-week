@@ -7,12 +7,30 @@ const path = require('path');
 const cors = require('../modules/node_modules/cors');
 const port = 8887;
 
+//configuracion de la app express------------------------------------------------------------
 const app = express();
+
 app.use(cors());
 
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname+'/index.html'));//TODO comprobar path
+})
+         
+app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`);
+});
+         
+app.use(bodyParser.urlencoded({ extended: true }));
+         
+app.post('/sendGoogleId', checkIfGoogleIdAlreadyExists(request, response));
+
+//conexión a mongodb-------------------------------------------------------------------
 mongoose.connect('mongodb+srv://EquipoFactoriaF5:gremlin@cluster0.9xlsu.mongodb.net/hiringday?retryWrites=true&w=majority', {useNewUrlParser: true});
 const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'console error:'));
+console.log('connection to mongodb is established!');
 
+//definición de esquema/modelo------------------------------------------------------------
 const Schema = new mongoose.Schema({
     googleId: String,
     name: String,
@@ -33,45 +51,31 @@ const Schema = new mongoose.Schema({
 
 const Users2 = mongoose.model('Users2', Schema);
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname+'/index.html'));//TODO comprobar path
-})
-         
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
-});
-         
-app.use(bodyParser.urlencoded({ extended: true }));
-         
-app.post('/enviarFormulario',function(request,response){
-console.log("el request.body es: ", request.body) //you will get your data in this as object.
-          
-db.on('error', console.error.bind(console, 'console error:'));
-console.log('we re connected!');
-               
-const nuevoUsuario = new Users2();
-nuevoUsuario.googleId = request.body.IdGoogle;
-nuevoUsuario.name = " ";
-nuevoUsuario.surname = " ";
-nuevoUsuario.profilePic = " ";
-nuevoUsuario.extract = " ";
-nuevoUsuario.contact = " ";
-nuevoUsuario.speciality = " ";
-nuevoUsuario.mail = " ";
-nuevoUsuario.cv = " ";
+const checkIfGoogleIdAlreadyExists = function(request, response){
+  const recievedGoogleId = request.body.IdGoogle;
+  Users2.find({googleId:recievedGoogleId}, function (err, user){
+    if (err) return console.error(err);
+    console.log(user);
+    })
+}
 
-console.log("nuevoUsuario es: ", nuevoUsuario);
-
-//guarda nuevo usuario en base de datos
-nuevoUsuario.save(function (err, nuevoUsuario){
-  if (err) return console.error(err);
-    console.log("lucas ha sido salvado");
-  });
-
-  //función de búsqueda de usuarios
-Users2.find(function (err, user){
-  if (err) return console.error(err);
-  console.log(user);
-  })
-})
-         
+const createNewUser = function(){
+  const nuevoUsuario = new Users2();
+  nuevoUsuario.googleId = request.body.IdGoogle;
+  nuevoUsuario.name = " ";
+  nuevoUsuario.surname = " ";
+  nuevoUsuario.profilePic = " ";
+  nuevoUsuario.extract = " ";
+  nuevoUsuario.contact = " ";
+  nuevoUsuario.speciality = " ";
+  nuevoUsuario.mail = " ";
+  nuevoUsuario.cv = " ";
+  
+  console.log("nuevoUsuario es: ", nuevoUsuario);
+  
+  //guarda nuevo usuario en base de datos
+  nuevoUsuario.save(function (err, nuevoUsuario){
+    if (err) return console.error(err);
+      console.log("createNewUser has succesfully saved a new user in the database");
+    });
+}
