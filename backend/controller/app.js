@@ -23,6 +23,7 @@ app.listen(port, () => {
 app.use(bodyParser.urlencoded({ extended: true }));
          
 app.post('/sendGoogleId', function(request, response){
+  console.log("post request /sendGoogleId recibida");
   checkIfGoogleIdAlreadyExists(request, response)
 });
 
@@ -54,16 +55,17 @@ const Schema = new mongoose.Schema({
 const Users2 = mongoose.model('Users2', Schema);
 
 const checkIfGoogleIdAlreadyExists = function(request, response){
+  console.log("checkIfGoogleExists ha sido ejecutada");
   const receivedGoogleId = request.body.IdGoogle;
-  Users2.find({googleId:receivedGoogleId}, function (err, user){
+  Users2.find({googleId:receivedGoogleId}, function (err, userList){
     if (err) return console.error(err);
-    console.log(user);
-    console.log("comprobando si la funcion es ejecutada");
-    createNewUser(receivedGoogleId); 
+    if (userList.length === 0) createNewUser(receivedGoogleId);
+    //funciones cuando ya estamos logueados
     })
 }
 
 const createNewUser = function(receivedGoogleId){
+  console.log("createNewUser ejecutada");
   const nuevoUsuario = new Users2();
   nuevoUsuario.googleId = receivedGoogleId ;
   nuevoUsuario.name = " ";
@@ -75,7 +77,7 @@ const createNewUser = function(receivedGoogleId){
   nuevoUsuario.mail = " ";
   nuevoUsuario.cv = " ";
   
-  console.log("nuevoUsuario es: ", nuevoUsuario);
+  //console.log("nuevoUsuario es: ", nuevoUsuario);
   
   //guarda nuevo usuario en base de datos
   nuevoUsuario.save(function (err, nuevoUsuario){
