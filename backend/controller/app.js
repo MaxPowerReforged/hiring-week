@@ -61,6 +61,9 @@ const checkIfGoogleIdAlreadyExists = function(request, response){
     if (err) return console.error(err);
     if (userList.length === 0) createNewUser(receivedGoogleId);
     //funciones cuando ya estamos logueados
+  Users2.update({googleId:"115560672018845276913"},{mail:"nuevainfo"},function(err,log){
+      });
+      
     })
 }
 
