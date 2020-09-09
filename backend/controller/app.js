@@ -54,16 +54,18 @@ const Schema = new mongoose.Schema({
 const Users2 = mongoose.model('Users2', Schema);
 
 const checkIfGoogleIdAlreadyExists = function(request, response){
-  const recievedGoogleId = request.body.IdGoogle;
-  Users2.find({googleId:recievedGoogleId}, function (err, user){
+  const receivedGoogleId = request.body.IdGoogle;
+  Users2.find({googleId:receivedGoogleId}, function (err, user){
     if (err) return console.error(err);
     console.log(user);
+    console.log("comprobando si la funcion es ejecutada");
+    createNewUser(receivedGoogleId); 
     })
 }
 
-const createNewUser = function(){
+const createNewUser = function(receivedGoogleId){
   const nuevoUsuario = new Users2();
-  nuevoUsuario.googleId = request.body.IdGoogle;
+  nuevoUsuario.googleId = receivedGoogleId ;
   nuevoUsuario.name = " ";
   nuevoUsuario.surname = " ";
   nuevoUsuario.profilePic = " ";
