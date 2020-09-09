@@ -22,7 +22,9 @@ app.listen(port, () => {
          
 app.use(bodyParser.urlencoded({ extended: true }));
          
-app.post('/sendGoogleId', checkIfGoogleIdAlreadyExists(request, response));
+app.post('/sendGoogleId', function(request, response){
+  checkIfGoogleIdAlreadyExists(request, response)
+});
 
 //conexión a mongodb-------------------------------------------------------------------
 mongoose.connect('mongodb+srv://EquipoFactoriaF5:gremlin@cluster0.9xlsu.mongodb.net/hiringday?retryWrites=true&w=majority', {useNewUrlParser: true});
