@@ -27,6 +27,16 @@ app.post('/sendGoogleId', function(request, response){
   checkIfGoogleIdAlreadyExists(request, response)
 });
 
+app.post('/updateUser', function(request, response){
+  console.log("post request /updateUser recibida");
+  updateUser(request, response)
+});
+
+app.post('/deleteUser', function(request, response){
+  console.log("post request /deleteUser recibida");
+  deleteUser(request, response)
+});
+
 //conexión a mongodb-------------------------------------------------------------------
 mongoose.connect('mongodb+srv://EquipoFactoriaF5:gremlin@cluster0.9xlsu.mongodb.net/hiringday?retryWrites=true&w=majority', {useNewUrlParser: true});
 const db = mongoose.connection;
@@ -61,10 +71,7 @@ const checkIfGoogleIdAlreadyExists = function(request, response){
     if (err) return console.error(err);
     if (userList.length === 0) createNewUser(receivedGoogleId);
     //funciones cuando ya estamos logueados
-  Users2.update({googleId:"115560672018845276913"},{mail:"nuevainfo"},function(err,log){
-      });
-      
-    })
+  })
 }
 
 const createNewUser = function(receivedGoogleId){
@@ -88,3 +95,15 @@ const createNewUser = function(receivedGoogleId){
       console.log("createNewUser has succesfully saved a new user in the database");
     });
 }
+
+  function updateUser(request,response){
+    const receivedGoogleId = request.body.IdGoogle;
+    Users2.update({googleId:receivedGoogleId},request.body,function(err,log){
+    });
+  }
+
+  function deleteUser(request,response){
+    const receivedGoogleId = request.body.IdGoogle;
+    Users2.remove({googleId:receivedGoogleId},function(err,log){
+    });
+  }
