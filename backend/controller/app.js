@@ -28,6 +28,7 @@ app.post('/sendGoogleId', function(request, response){
 });
 
 app.post('/updateUser', function(request, response){
+  console.log("request.body es: ", request.body);
   console.log("post request /updateUser recibida");
   updateUser(request, response)
 });
@@ -64,6 +65,7 @@ const Schema = new mongoose.Schema({
 
 const Users2 = mongoose.model('Users2', Schema);
 
+//TODO renombrar variables de Google ID para tener consistencia
 const checkIfGoogleIdAlreadyExists = function(request, response){
   console.log("checkIfGoogleExists ha sido ejecutada");
   const receivedGoogleId = request.body.IdGoogle;
@@ -71,6 +73,8 @@ const checkIfGoogleIdAlreadyExists = function(request, response){
     if (err) return console.error(err);
     if (userList.length === 0) createNewUser(receivedGoogleId);
     //funciones cuando ya estamos logueados
+  }).then(function(){
+    response.end("checkIfGoogleExists successful");
   })
 }
 
@@ -97,13 +101,19 @@ const createNewUser = function(receivedGoogleId){
 }
 
   function updateUser(request,response){
-    const receivedGoogleId = request.body.IdGoogle;
+    const receivedGoogleId = request.body.googleId;
     Users2.update({googleId:receivedGoogleId},request.body,function(err,log){
-    });
+      if(err) console.log(err);
+    })
+    .then(function(){
+      response.end("updateUser successful");
+    })
   }
 
   function deleteUser(request,response){
-    const receivedGoogleId = request.body.IdGoogle;
+    const receivedGoogleId = request.body.googleId;
     Users2.remove({googleId:receivedGoogleId},function(err,log){
-    });
+    }).then(function(){
+      response.end("deleteUser successful");
+    })
   }
