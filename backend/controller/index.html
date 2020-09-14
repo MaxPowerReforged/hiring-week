@@ -3,44 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-signin-client_id" content="929847184367-lf702ndkmceq2r6efkp8a1fbp544udhu.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>Document</title>
 </head>
 <body>
-    <form>     
-          <input type="text" id="inputNombre" name="inputNombre">
-          <input type="text" id="inputEmail"  name="inputEmail">
-          <input type="text" id="inputNumeroTelefono" name="inputNumeroTelefono">
-          
-          <!-- <input id="cajaBusqueda" type="text" placeholder="Busqueda tu Coder">
-            <button id="botonBusqueda">Buscar</button> -->
-
-          <button type="button" id="buttonEnviar">Enviar mensaje</button>
+<h1>Test registro</h1>
+<div class="g-signin2" data-onsuccess="onSignIn"></div>
+<a href="#" onclick="signOut();">Sign out</a>
     
-        </form>
+<script>
+    'use strict'
 
-        <script>
-            let button =document.getElementById('buttonEnviar')
-            button.addEventListener('click',enviarFormulario);
+    function onSignIn(googleUser) {
+        var googleId = googleUser.getBasicProfile().getId();
+        console.log('Login realizado con Google, Id:', googleId);
+        let newUser = {
+            IdGoogle: googleId
+        }
 
-            function enviarFormulario(){
-                let inputNombre =document.getElementById('inputNombre').value
-                let inputEmail =document.getElementById('inputEmail').value
-                let inputNumeroTelefono =document.getElementById('inputNumeroTelefono').value
-                let informacionFormulario ={
-                    nombre: inputNombre,
-                    email: inputEmail,
-                    telefono: inputNumeroTelefono
-                }
-
-                $.post('http://127.0.0.1:3000/enviarFormulario',informacionFormulario,function(){
-                    console.log('la función se ha ejecutado')
-
-
-
-                })
-
-            }
+        $.post('http://127.0.0.1:8887/sendGoogleId', newUser,function(){
+            console.log('la función se ha ejecutado');
+        });
+    }
+    
+    function signOut() {
+        var auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(function () {
+        console.log('User signed out.');
+        });
+    }
             // const data = [
             //     {Nombre:"Alberto", Skills:"javascript, html, css", Language:"castellano, ingles, chino", Edad:"43"}, 
             //     {Nombre:"Josefina", Skills:"html, php, java", Language:"castellano, catalan", Edad:"58"}, 
@@ -68,8 +61,6 @@
             //     };
 
 
-        </script>
+</script>
 </body>
-
-
 </html>
