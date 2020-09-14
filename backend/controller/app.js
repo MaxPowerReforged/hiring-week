@@ -4,6 +4,7 @@ const express = require('../modules/node_modules/express');
 const mongoose = require('../modules/node_modules/mongoose');
 const bodyParser = require('../modules/node_modules/body-parser');
 const path = require('path');
+const exphbs = require('../modules/node_modules/express-handlebars');
 const cors = require('../modules/node_modules/cors');
 const port = 8887;
 
@@ -11,17 +12,29 @@ const port = 8887;
 const app = express();
 
 app.use(cors());
-
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname+'/index.html'));//TODO comprobar path
-})
-         
+    
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
          
 app.use(bodyParser.urlencoded({ extended: true }));
-         
+app.set('views', '../../frontend/views');
+
+app.engine('.hbs', exphbs({
+  defaultLayout: 'main',
+  layoutsDir: path.join(app.get('views'), 'layouts'),
+  partialsDir: path.join(app.get('views'), 'partials'),
+  extname: '.hbs'
+}));
+
+app.set('index', path.join('views', 'index'));
+app.set('view engine', '.hbs');
+
+app.get('/', (req, res) => {
+  res.render('index');
+});
+
+//Configuración protocolos HTTP POST
 app.post('/sendGoogleId', function(request, response){
   console.log("post request /sendGoogleId recibida");
   checkIfGoogleIdAlreadyExists(request, response)
