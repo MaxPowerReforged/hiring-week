@@ -9,9 +9,9 @@
   },
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest --detectOpenHandles"
   },
   "author": "MaxPower",
   "license": "ISC",
@@ -21,6 +21,7 @@
     "express": "^4.17.1",
     "express-handlebars": "^5.1.0",
     "jest": "^26.5.3",
-    "mongoose": "^5.10.0"
+    "mongoose": "^5.10.0",
+    "supertest": "^5.0.0"
   }
 }
