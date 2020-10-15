@@ -1,5 +1,12 @@
 {
   "name": "hiring-week-modules",
+  "jest": {
+    "rootDir": "../tests",
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
+  },
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
